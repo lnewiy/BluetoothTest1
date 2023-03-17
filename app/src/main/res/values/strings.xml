@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TestN2</string>
+    <string name="button1">搜索设备</string>
+    <string name="button2">打开可被发现</string>
+    <string name="sw1">蓝牙开关    </string>
+    <string name="show1">设备列表</string>
+</resources>
