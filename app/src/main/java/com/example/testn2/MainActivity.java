@@ -12,6 +12,7 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.BulletSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -109,12 +110,12 @@ public class MainActivity extends AppCompatActivity {
                     BTController.cancelSearch();
                     String s2 = "设备名：" + device.getName() + "\n" + "设备地址：" + device.getAddress() + "\n" + "连接状态：已配对" + "\n";
                     if(deviceName.contains(s2)) {
-                        unpairDevice(device);
-                        deviceName.remove(s2);
-                        s2 = "设备名：" + device.getName() + "\n" + "设备地址：" + device.getAddress() + "\n" + "连接状态：未配对"  +"\n";
-                        deviceName.add(s2);
-                        adapter1.notifyDataSetChanged();
-                        showToast("取消配对：" + device.getName());
+                        Intent intent = new Intent(MainActivity.this, BTRW.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("deviceaddr",device.getAddress());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }
