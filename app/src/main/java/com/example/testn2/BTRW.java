@@ -14,41 +14,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 public class BTRW extends AppCompatActivity {
 
-    private ArrayList<String> requestList = new ArrayList<>();
+    private final ArrayList<String> requestList = new ArrayList<>();
 
     private int REQ_Permission_CODE = 1;
+    private boolean DEFAULT_STATE = true;
     public View touchArea;
+    public TextView showState;
+    public Switch toggleState;
 
     private BTclient btclient = new BTclient();
 
-
-    private OutputStream btOutstream;
-
     private Toast mToast;
     public BTControl mController = new BTControl();
-
-    public ArrayList<String> msglist = new ArrayList<>();
     private BluetoothSocket btsocket;
-
-    public Handler mhandler;
-
-    private interface MessageConstants {
-        public static final int MESSAGE_READ = 0;
-        public static final int MESSAGE_WRITE = 1;
-        public static final int MESSAGE_TOAST = 2;
-
-
-    }
 
 
     @Override
@@ -58,6 +52,8 @@ public class BTRW extends AppCompatActivity {
 
 
         touchArea = (View) findViewById(R.id.hint1);
+        showState = (TextView) findViewById(R.id.conntv2);
+        toggleState = (Switch) findViewById(R.id.switch2);
 
         touchArea.setOnTouchListener(handleTouch);
 
@@ -67,6 +63,23 @@ public class BTRW extends AppCompatActivity {
         btclient.connectDevice(mController.find_device(bundle.getString("deviceaddr")));
 
         btclient.start();
+        toggleState.setChecked(DEFAULT_STATE);
+
+        toggleState.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(toggleState.isChecked()){
+                    btclient.connectDevice(mController.find_device(bundle.getString("deviceaddr")));
+                    showState.setText("已连接");
+                    showToast("已连接设备");
+                }
+                else{
+                    btDisconnect();
+                    showState.setText("已断开");
+                    showToast("已断开设备");
+                }
+            }
+        });
 
     }
 
@@ -87,6 +100,7 @@ public class BTRW extends AppCompatActivity {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.e("touch", "当前位置x:" + x + ",y:" + y);
+                    sendMessageHandle(getFrame(x,y));
                     break;
                 case MotionEvent.ACTION_UP:
                     Log.e("touch", "结束位置x:" + x + ",y:" + y);
@@ -157,27 +171,8 @@ public class BTRW extends AppCompatActivity {
     }
 
     public String getFrame(int x,int y){
-
-
+        return "X"+"Y"+x+y+"END"+"\n";
     }
-    /*public void sendmsg(byte[] bytes){
-        try{
-            btOutstream.write(bytes);
-            Message writtenMsg = mhandler.obtainMessage(
-                    MessageConstants.MESSAGE_WRITE,-1,-1,mBuffer);
-            writtenMsg.sendToTarget();
-        }
-        catch(IOException e){
-            Log.e("send","数据发送出错");
-
-            Message writeErrorMsg = mhandler.obtainMessage(MessageConstants.MESSAGE_TOAST);
-            Bundle bundle = new Bundle();
-            bundle.putString("toast","无法向另一个设备发送消息");
-            writeErrorMsg.setData(bundle);
-            mhandler.sendMessage(writeErrorMsg);
-        }
-
-    }*/
 
     public void btDisconnect(){
         try{

@@ -6,7 +6,7 @@
     <string name="show1">设备列表</string>
     <string name="conn1">蓝牙状态:  </string>
     <string name="conn2">已连接</string>
-    <string name="button3">切换状态</string>
+    <string name="switch2">切换状态</string>
     <string name="hint1">触摸发送坐标</string>
     <string name="show3">发送数据</string>
     <string name="send1">输入发送数据</string>
