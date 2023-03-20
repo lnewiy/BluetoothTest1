@@ -10,5 +10,8 @@
     <string name="hint1">触摸发送坐标</string>
     <string name="show3">发送数据</string>
     <string name="send1">输入发送数据</string>
-    <string name="button3">清除图像</string>
+    <string name="button3">发送参数</string>
+    <string name="divide1">选择模式</string>
+    <string name="divide2">触摸划区</string>
+    <string name="divide3">选图显示</string>
 </resources>

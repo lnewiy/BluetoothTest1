@@ -67,6 +67,8 @@ public class BTRW extends AppCompatActivity {
     public BTControl mController = new BTControl();
     private BluetoothSocket btsocket;
 
+    public static int startX,startY,endX,endY;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,7 @@ public class BTRW extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         touchArea.setOnTouchListener(handleTouch);
+
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -111,9 +114,26 @@ public class BTRW extends AppCompatActivity {
         clearPaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mDrawing.clear();
+                sendMessageHandle(getFrame(startX,startY));
+                sendMessageHandle(getFrame(endX,endY));
             }
         });
+
+    }
+
+    public void getParam(int x,int y,int type){
+        switch (type) {
+            case 1:
+                startX=x;
+                startY=y;
+                break;
+            case 0:
+                endX=x;
+                endY=y;
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -137,7 +157,6 @@ public class BTRW extends AppCompatActivity {
                 case MotionEvent.ACTION_MOVE:
                     break;
                 case MotionEvent.ACTION_UP:
-                    Log.e("touch", "结束:" + x1 + ",y:" + y1);
                     break;
                 default:
                     break;

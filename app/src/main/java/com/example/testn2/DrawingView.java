@@ -26,6 +26,9 @@ public class DrawingView extends View {
     Point2D p2 = null;
     View mDrawing = findViewById(R.id.mdraw);
 
+    BTRW extraUse = new BTRW();
+
+
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -51,7 +54,6 @@ public class DrawingView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        //初始化空畫布
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
     }
@@ -85,6 +87,7 @@ public class DrawingView extends View {
             case MotionEvent.ACTION_DOWN:
                 Log.e("touch", "起始位置x:" + x1 + ",y:" + y1);
                 p1 = new Point2D(pointX, pointY);
+                extraUse.getParam(x1,y1,1);
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.e("touch", "当前位置x:" + x1 + ",y:" + y1);
@@ -92,6 +95,7 @@ public class DrawingView extends View {
             case MotionEvent.ACTION_UP:
                 Log.e("touch", "结束位置x:" + x1 + ",y:" + y1);
                 p2 = new Point2D(pointX, pointY);
+                extraUse.getParam(x1,y1,0);
                 postInvalidate();
                 break;
             default:
@@ -105,7 +109,6 @@ public class DrawingView extends View {
         onSizeChanged(getWidth(),getHeight(),getWidth(),getHeight());
         invalidate();
         setDrawingCacheEnabled(true);
-
     }
 
     @Override
