@@ -36,12 +36,10 @@ public class BTControl {
 
     }
 
-
     public void BTSwitchOff() {
         if (mAdapter.isEnabled()) {
             mAdapter.disable();
         }
-
     }
 
     public boolean findDevice(){

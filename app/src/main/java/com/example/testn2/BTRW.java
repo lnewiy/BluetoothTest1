@@ -4,23 +4,38 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,10 +48,18 @@ public class BTRW extends AppCompatActivity {
     private final ArrayList<String> requestList = new ArrayList<>();
 
     private int REQ_Permission_CODE = 1;
+
     private boolean DEFAULT_STATE = true;
+
     public View touchArea;
+    public Canvas mCanvas;
+
+    public DrawingView mDrawing;
+
     public TextView showState;
     public Switch toggleState;
+
+    public Button clearPaint;
 
     private BTclient btclient = new BTclient();
 
@@ -44,16 +67,20 @@ public class BTRW extends AppCompatActivity {
     public BTControl mController = new BTControl();
     private BluetoothSocket btsocket;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_btrw);
 
+        mCanvas = new Canvas();
 
-        touchArea = (View) findViewById(R.id.hint1);
+        touchArea = findViewById(R.id.hint1);
         showState = (TextView) findViewById(R.id.conntv2);
         toggleState = (Switch) findViewById(R.id.switch2);
+        clearPaint = (Button) findViewById(R.id.button3);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         touchArea.setOnTouchListener(handleTouch);
 
@@ -81,38 +108,43 @@ public class BTRW extends AppCompatActivity {
             }
         });
 
+        clearPaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawing.clear();
+            }
+        });
+
     }
 
-    private final View.OnTouchListener handleTouch = new View.OnTouchListener() {
+   private final View.OnTouchListener handleTouch = new View.OnTouchListener() {
 
         public boolean onTouch(View v, MotionEvent event) {
 
-            int y = 1152*(int) event.getY()/touchArea.getHeight();//结果归化到1080*1920
-            int x = 576*(int) event.getX()/touchArea.getWidth();
+            int x = (int)event.getX();
+            int y = (int) event.getY();
 
-            if(x>=576){x=576;}if(x<0){x=0;}
-            if(y>=1152){y=1152;}if(y<0){y=0;}//越界
+            int y1 = 1152*(int) event.getY()/touchArea.getHeight();//结果归化到1080*1920
+            int x1 = 576*(int) event.getX()/touchArea.getWidth();
 
+            if(x1>=576){x1=576;}if(x1<0){x1=0;}
+            if(y1>=1152){y1=1152;}if(y1<0){y1=0;}//越界
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    Log.e("touch", "起始位置x:" + x + ",y:" + y);
+                    sendMessageHandle(getFrame(x1,y1));
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    Log.e("touch", "当前位置x:" + x + ",y:" + y);
-                    sendMessageHandle(getFrame(x,y));
                     break;
                 case MotionEvent.ACTION_UP:
-                    Log.e("touch", "结束位置x:" + x + ",y:" + y);
+                    Log.e("touch", "结束:" + x1 + ",y:" + y1);
                     break;
                 default:
                     break;
             }
-            return true;
-
+            return false;
         }
     };
-
 
 
     public void getPermission(){
@@ -130,7 +162,7 @@ public class BTRW extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    private class BTclient extends Thread{
+    public class BTclient extends Thread{
         private void connectDevice(BluetoothDevice device){
             try {
                 getPermission();
@@ -142,6 +174,7 @@ public class BTRW extends AppCompatActivity {
                 showToast("蓝牙连接失败");
             }
         }
+
     }
 
     public void showToast(String text){
@@ -170,6 +203,7 @@ public class BTRW extends AppCompatActivity {
         }
     }
 
+
     public String getFrame(int x,int y){
         return "X"+"Y"+x+y+"END"+"\n";
     }
@@ -180,7 +214,17 @@ public class BTRW extends AppCompatActivity {
         }catch(IOException e){
             Log.e("close","无法关闭连接");
         }
-
-
     }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+
+        if (item.getItemId() == android.R.id.home) {
+            btDisconnect();
+            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

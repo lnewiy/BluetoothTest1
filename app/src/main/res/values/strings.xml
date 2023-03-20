@@ -10,4 +10,5 @@
     <string name="hint1">触摸发送坐标</string>
     <string name="show3">发送数据</string>
     <string name="send1">输入发送数据</string>
+    <string name="button3">清除图像</string>
 </resources>

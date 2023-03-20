@@ -8,6 +8,18 @@
     android:background="@color/teal_200">
 
 
+    <com.example.testn2.DrawingView
+        android:id="@+id/mdraw"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/hint1"
+        app:layout_constraintTop_toTopOf="@id/hint1"
+        app:layout_constraintStart_toStartOf="@id/hint1"
+        app:layout_constraintEnd_toEndOf="@id/hint1"
+        />
+
+
     <TextView
         android:id="@+id/conntv2"
         android:layout_width="match_parent"
@@ -35,6 +47,19 @@
         />
 
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button3"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hint1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
 
 
     <Switch
@@ -56,7 +81,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="50dp"
-        android:background="@color/white"
         android:text="@string/hint1"
         android:textAlignment="center"
         android:textSize="20sp"
