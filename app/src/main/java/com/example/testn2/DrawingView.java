@@ -104,13 +104,6 @@ public class DrawingView extends View {
         return true;
     }
 
-    public void clear(){
-        setDrawingCacheEnabled(false);
-        onSizeChanged(getWidth(),getHeight(),getWidth(),getHeight());
-        invalidate();
-        setDrawingCacheEnabled(true);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         if(p1!=null && p2!=null) {
@@ -119,7 +112,5 @@ public class DrawingView extends View {
             p2=null;
         }
     }
-
-
 
 }

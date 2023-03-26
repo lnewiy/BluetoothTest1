@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     BTController.cancelSearch();
                     String s2 = "设备名：" + device.getName() + "\n" + "设备地址：" + device.getAddress() + "\n" + "连接状态：已配对" + "\n";
                     if(deviceName.contains(s2)) {
-                        Intent intent = new Intent(MainActivity.this,BTRW.class);
+                        Intent intent = new Intent(MainActivity.this,ModeChoose.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("deviceaddr",device.getAddress());
                         intent.putExtras(bundle);
@@ -161,9 +161,7 @@ public class MainActivity extends AppCompatActivity {
     public void BTON(){
         getPermission();
         BTController.BTSwitchOn(this,1);
-
     }
-
 
     private void unpairDevice(BluetoothDevice device) {
         try {

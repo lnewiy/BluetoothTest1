@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <TextView
+        android:id="@+id/picCon1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:text="@string/conn2"
+        android:paddingStart="5dp"
+        android:textAlignment="center"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="@id/picState1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/picState1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/conn1"
+        android:textSize="28sp"
+        android:gravity="center_horizontal"
+        android:background="@color/purple_200"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Switch
+        android:id="@+id/picSw1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/switch2"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/picState1"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <Button
+        android:id="@+id/pic1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic1"
+        android:textSize="40sp"
+        android:background="@color/teal_200"
+        app:layout_constraintTop_toBottomOf="@id/picCon1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pic2"
+        app:layout_constraintBottom_toTopOf="@id/pic3"
+        />
+
+    <Button
+        android:id="@+id/pic2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic2"
+        android:textSize="40sp"
+        app:layout_constraintTop_toBottomOf="@id/picCon1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pic1"
+        app:layout_constraintBottom_toTopOf="@id/pic4"
+        />
+
+    <Button
+        android:id="@+id/pic3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic3"
+        android:textSize="40sp"
+        app:layout_constraintTop_toBottomOf="@id/pic1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pic4"
+        app:layout_constraintBottom_toTopOf="@id/pic5"
+        />
+
+    <Button
+        android:id="@+id/pic4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic4"
+        android:textSize="40sp"
+        android:background="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pic2"
+        app:layout_constraintStart_toEndOf="@id/pic3"
+        app:layout_constraintBottom_toTopOf="@id/pic6"
+        />
+    <Button
+        android:id="@+id/pic5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic5"
+        android:textSize="40sp"
+        android:background="@color/teal_200"
+        app:layout_constraintTop_toBottomOf="@id/pic3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pic6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/pic6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/pic6"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pic4"
+        app:layout_constraintStart_toEndOf="@id/pic5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
