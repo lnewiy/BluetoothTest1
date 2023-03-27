@@ -23,6 +23,10 @@
         <activity
             android:name=".BTRW"
             android:exported="false" />
+        <activity android:name=".ModeChoose"
+            android:exported="false"/>
+        <activity android:name=".PicSelect"
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

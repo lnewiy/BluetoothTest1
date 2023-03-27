@@ -60,7 +60,7 @@ public class PicSelect extends AppCompatActivity {
         pic5 = findViewById(R.id.pic5);
         pic6 = findViewById(R.id.pic6);
 
-        showState = (TextView) findViewById(R.id.picState1);
+        showState = (TextView) findViewById(R.id.picCon1);
         toggleState = (Switch) findViewById(R.id.picSw1);
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -91,6 +91,8 @@ public class PicSelect extends AppCompatActivity {
                 }
             }
         });
+
+        ButtonActivity();
 
     }
 
