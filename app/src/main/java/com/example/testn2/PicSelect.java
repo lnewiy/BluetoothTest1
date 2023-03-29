@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -182,7 +183,7 @@ public class PicSelect extends AppCompatActivity {
         mToast.show();
     }
 
-    public void sendMessageHandle(String msg)
+    public void sendMessageHandle(byte[] data)
     {
         getPermission();
         if (btsocket == null)
@@ -192,15 +193,22 @@ public class PicSelect extends AppCompatActivity {
         }
         try {
             OutputStream os = btsocket.getOutputStream();
-            os.write(msg.getBytes()); //发送出去的值为：msg
+            os.write(data); //发送出去的值为：msg
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public String getFrame(int code){
-        return "02"+"00"+code+"00"+"\n";
+    public byte[] getFrame(int code){
+
+        //String s;
+        byte[] data;
+        //s ="02"+"00"+code+"00"+"\n";
+        data = new byte[]{0x02,0x00,(byte)code,0x00,0x0A};
+        return data;
+
+
     }
 
     public void btDisconnect(){
@@ -220,6 +228,11 @@ public class PicSelect extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 
 
 }

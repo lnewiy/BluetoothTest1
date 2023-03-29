@@ -39,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.SimpleTimeZone;
 import java.util.UUID;
@@ -137,34 +138,6 @@ public class BTRW extends AppCompatActivity {
 
     }
 
-   /*private final View.OnTouchListener handleTouch = new View.OnTouchListener() {
-
-        public boolean onTouch(View v, MotionEvent event) {
-
-            int x = (int)event.getX();
-            int y = (int) event.getY();
-
-            int y1 = 1152*(int) event.getY()/touchArea.getHeight();//结果归化到1080*1920
-            int x1 = 576*(int) event.getX()/touchArea.getWidth();
-
-            if(x1>=576){x1=576;}if(x1<0){x1=0;}
-            if(y1>=1152){y1=1152;}if(y1<0){y1=0;}//越界
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    break;
-                case MotionEvent.ACTION_UP:
-                    break;
-                default:
-                    break;
-            }
-            return false;
-        }
-    };*/
-
-
     public void getPermission(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             requestList.add(Manifest.permission.BLUETOOTH_SCAN);
@@ -205,7 +178,7 @@ public class BTRW extends AppCompatActivity {
         mToast.show();
     }
 
-    public void sendMessageHandle(String msg)
+    public void sendMessageHandle(byte[] data)
     {
         getPermission();
         if (btsocket == null)
@@ -215,24 +188,28 @@ public class BTRW extends AppCompatActivity {
         }
         try {
             OutputStream os = btsocket.getOutputStream();
-            os.write(msg.getBytes()); //发送出去的值为：msg
+            os.write(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    public String getFrame(int x,int y,int type){
-        String s;
+    public byte[] getFrame(int x,int y,int type){
+        //String s;
+        byte[] data;
+
 
         if(type==0){
-            s = "01"+"00"+x+y+"00"+"\n";
+           //s = "01"+"00"+x+y+"00"+"\n";
+            data = new byte[]{0x01,0x00,(byte)((x>>8)&0xFF),(byte)(x & 0xFF),(byte)((y>>8) & 0xFF),(byte)(y & 0xFF),0x00,0x0A};
         }
         else {
-            s = "01"+"01"+x+y+"00"+"\n";
+            //s = "01"+"01"+x+y+"00"+"\n";
+            data = new byte[]{0x01,0x01,(byte)((x>>8)&0xFF),(byte)(x & 0xFF),(byte)((y>>8) & 0xFF),(byte)(y & 0xFF),0x00,0x0A};
         }
 
-        return s;
+        return data;
     }
 
     public void btDisconnect(){
